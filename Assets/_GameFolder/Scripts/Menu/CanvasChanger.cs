@@ -1,13 +1,13 @@
 ﻿using System.Collections;
-using UnityEngine;
 using DG.Tweening;
+using UnityEngine;
 
-namespace hardartcore.CasualGUI
+namespace _GameFolder.Scripts.Menu
 {
     public class CanvasChanger : MonoBehaviour
     {
+        [SerializeField] private float waitForSeconds;
 
-        private WaitForSeconds waitForSeconds = new WaitForSeconds(0.3f);
         public void ShowCanvas(CanvasGroup canvasGroup)
         {
             StartCoroutine(ProcessCanvasGroup(canvasGroup, 0f, 1f, true));
@@ -22,9 +22,9 @@ namespace hardartcore.CasualGUI
         {
             canvasGroup.alpha = initAlpha;
             if (enable) canvasGroup.gameObject.SetActive(true);
-            yield return waitForSeconds;
+            yield return new WaitForSeconds(waitForSeconds);
             canvasGroup.DOFade(alpha, 0.3f);
-            yield return waitForSeconds;
+            yield return new WaitForSeconds(waitForSeconds);
             canvasGroup.gameObject.SetActive(enable);
         }
     }
