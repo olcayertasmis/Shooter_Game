@@ -12,6 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d715a828841d834693da2dac7486f7f, type: 3}
   m_Name: Menu Data
   m_EditorClassIdentifier: 
-  transitionDuration: 0
-  autoTransitionInterval: 0
-  backgroundSprites: []
+  transitionDuration: 1.5
+  autoTransitionInterval: 2
+  backgroundSprites:
+  - {fileID: 21300000, guid: b7c1520adb41c4a5c859a7a4cb570e66, type: 3}
+  - {fileID: 21300000, guid: 6c802178234864786913b1160c0705aa, type: 3}
+  - {fileID: 21300000, guid: 41049c3ca7a1c4db48ae333351bbcc78, type: 3}
+  - {fileID: 21300000, guid: 796615c837c36493fbd23746058411a2, type: 3}
+  - {fileID: 21300000, guid: 6aca85f94b9b240d79db9808be355f7d, type: 3}
+  - {fileID: 21300000, guid: 73d863d250ca9464c9e19b7cd08a141e, type: 3}
+  canvasTransitionWaitForSeconds: 0.1

@@ -37,5 +37,5 @@ namespace _GameFolder.Scripts.SingletonSystem
                 }
             }
         }
-    }
+    } // END CLASS
 }

@@ -1,6 +1,4 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using _GameFolder.Scripts.Data;
 using _GameFolder.Scripts.Manager;
 using UnityEngine;
@@ -10,14 +8,17 @@ namespace _GameFolder.Scripts.Menu
 {
     public class BackgroundTransition : MonoBehaviour
     {
-        private int _currentIndex;
-        private Coroutine _autoTransitionCoroutine;
-
+        [Header("Managers")]
         private Managers _managers;
         private MenuData _menuData;
 
+
+        [Header("Values")]
         private Image _backgroundImage;
         private float _transitionDuration;
+        private int _currentIndex;
+
+        private Coroutine _autoTransitionCoroutine;
 
         private void Awake()
         {
@@ -86,5 +87,5 @@ namespace _GameFolder.Scripts.Menu
         }
 
         #endregion
-    }
+    } // END CLASS
 }

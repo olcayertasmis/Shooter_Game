@@ -12,4 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4f08335ca730a542bcee2a1642f9dac, type: 3}
   m_Name: Data Manager
   m_EditorClassIdentifier: 
-  menuData: {fileID: 0}
+  menuData: {fileID: 11400000, guid: 62c9f99ea243b0b41b9ea6039f2fd208, type: 2}
+  gameData: {fileID: 11400000, guid: 8d07fb8fbe40414408872c1a906ac27a, type: 2}

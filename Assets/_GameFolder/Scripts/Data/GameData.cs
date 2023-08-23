@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace _GameFolder.Scripts.Data
@@ -7,5 +6,5 @@ namespace _GameFolder.Scripts.Data
     public class GameData : ScriptableObject
     {
         public float aa;
-    }
+    } // END CLASS
 }
