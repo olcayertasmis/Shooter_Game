@@ -614,7 +614,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 293948765}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1073594363}
+        m_TargetAssemblyTypeName: _GameFolder.Scripts.Manager.MenuUIManager, Assembly-CSharp
+        m_MethodName: LoadGameScene
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &293948765
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1765,6 +1777,8 @@ GameObject:
   - component: {fileID: 1073594361}
   - component: {fileID: 1073594363}
   - component: {fileID: 1073594364}
+  - component: {fileID: 1073594365}
+  - component: {fileID: 1073594366}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -1784,10 +1798,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6484f90ac95eeeb41844c51508d49c20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dontDestroyOnLoad: 0
+  dontDestroyOnLoad: 1
   menuUIManager: {fileID: 1073594363}
   dataManager: {fileID: 11400000, guid: e2fb285754317194a8db73a77d7ca786, type: 2}
   gameManager: {fileID: 1073594364}
+  loadManager: {fileID: 1073594365}
+  loadingManager: {fileID: 1073594366}
 --- !u!4 &1073594362
 Transform:
   m_ObjectHideFlags: 0
@@ -1828,6 +1844,32 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: aca284c044b79ce45bb04403f85fbe7d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1073594365
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1073594360}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 469ffff0d2bd6cd4789a9e83b9172978, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  loadingSlider: {fileID: 0}
+  loadingText: {fileID: 0}
+--- !u!114 &1073594366
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1073594360}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 487ba6aa264e4a648919cafbe4d5d729, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1161903115
