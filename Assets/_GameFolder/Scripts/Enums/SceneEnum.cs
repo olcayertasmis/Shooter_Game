@@ -10,5 +10,7 @@ namespace _GameFolder.Scripts.Enums
             LoadingScene,
             Game
         }
+
+        public static string GetLoadingSceneName => SceneName.LoadingScene.ToString();
     } // END CLASS
 }

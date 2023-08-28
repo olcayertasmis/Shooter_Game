@@ -11,7 +11,7 @@ namespace _GameFolder.Scripts.Manager
         public void LoadSceneWithLoading(SceneEnum.SceneName sceneName)
         {
             sceneToLoad = sceneName.ToString();
-            SceneManager.LoadScene(SceneEnum.SceneName.LoadingScene.ToString());
+            SceneManager.LoadScene(SceneEnum.GetLoadingSceneName);
         }
     } // END CLASS
 }
