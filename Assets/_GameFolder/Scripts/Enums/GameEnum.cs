@@ -10,6 +10,11 @@ namespace _GameFolder.Scripts.Enums
             Play,
             Dead
         }
-        
+
+        public enum EnemyType
+        {
+            SimpleEnemy,
+            BomberEnemy
+        }
     } // END CLASS
 }

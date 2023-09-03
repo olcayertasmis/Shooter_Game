@@ -25,7 +25,7 @@ namespace _GameFolder.Scripts.Game.CharacterSystem
 
         public virtual void Move(float direction)
         {
-            throw new System.NotImplementedException();
+            //throw new System.NotImplementedException();
         }
 
         public virtual void TakeDamage(int damage)
@@ -40,5 +40,5 @@ namespace _GameFolder.Scripts.Game.CharacterSystem
         protected virtual void Die()
         {
         }
-    }
+    } // END CLASS
 }

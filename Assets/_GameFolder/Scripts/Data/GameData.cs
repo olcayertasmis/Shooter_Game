@@ -1,5 +1,7 @@
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 
 namespace _GameFolder.Scripts.Data
 {
@@ -11,8 +13,13 @@ namespace _GameFolder.Scripts.Data
         [SerializeField] private float playerMovementSpeed;
 
         [Header("Enemy Stats")]
-        [SerializeField] private int enemyMaxHealth;
-        [SerializeField] private float enemyMovementSpeed;
+        [SerializeField] private int simpleEnemyMaxHealth;
+        [SerializeField] private float simpleEnemyMovementSpeed;
+
+        [Header("Enemy Spawner Settings")]
+        [SerializeField] private float spawnInterval;
+        [SerializeField] private GameObject[] enemyPrefabs;
+        [SerializeField] private Transform[] enemySpawnPoints;
 
         #region Player Getters
 
@@ -21,10 +28,18 @@ namespace _GameFolder.Scripts.Data
 
         #endregion
 
-        #region Enemy Getters
+        #region Enemy Stats Getters
 
-        public int EnemyMaxHealth => enemyMaxHealth;
-        public float EnemyMovementSpeed => enemyMovementSpeed;
+        public int SimpleEnemyMaxHealth => simpleEnemyMaxHealth;
+        public float SimpleEnemyMovementSpeed => simpleEnemyMovementSpeed;
+
+        #endregion
+
+        #region Enemy Spawner Getters
+
+        public float SpawnInterval => spawnInterval;
+        public GameObject[] EnemyPrefabs => enemyPrefabs;
+        public Transform[] EnemySpawnPoints => enemySpawnPoints;
 
         #endregion
     } // END CLASS

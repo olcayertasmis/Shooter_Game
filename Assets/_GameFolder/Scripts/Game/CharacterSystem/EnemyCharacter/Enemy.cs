@@ -1,7 +1,6 @@
 namespace _GameFolder.Scripts.Game.CharacterSystem.EnemyCharacter
 {
-    public class SimpleEnemy : BaseCharacter
+    public class Enemy : BaseCharacter
     {
-        
-    }
+    } // END CLASS
 }

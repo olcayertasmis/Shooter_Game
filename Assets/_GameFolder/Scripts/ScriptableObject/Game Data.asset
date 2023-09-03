@@ -12,4 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29c6d1450e1712d4aafd918a6d6de796, type: 3}
   m_Name: Game Data
   m_EditorClassIdentifier: 
-  aa: 0
+  playerMaxHealth: 100
+  playerMovementSpeed: 3
+  simpleEnemyMaxHealth: 2
+  simpleEnemyMovementSpeed: 2
+  spawnInterval: 3
+  enemyPrefabs:
+  - {fileID: 2465763057359843036, guid: c4b792e60ca6a2f47bf2bc0c1c4cc88a, type: 3}
+  - {fileID: 4952177850264773177, guid: be9912fa3c3faec4d85327fc8d2ba3d4, type: 3}
+  enemySpawnPoints:
+  - {fileID: 5828198211220284890, guid: 575941ca64317df48a0180b089dc2374, type: 3}
+  - {fileID: 7288081266331963730, guid: 2fe6329c2159e4d43843ded7062cbb1a, type: 3}
