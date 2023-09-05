@@ -1,4 +1,3 @@
-using System;
 using _GameFolder.Scripts.Data;
 using _GameFolder.Scripts.Interface;
 using _GameFolder.Scripts.Manager;
@@ -8,9 +7,14 @@ namespace _GameFolder.Scripts.Game.CharacterSystem
 {
     public class BaseCharacter : MonoBehaviour, IMovable, IDamageable
     {
-        protected int Health;
-        protected float Speed;
+        [Header("Stats")]
+        private int _health;
+        private float _speed;
+
+        [Header("Data")]
         protected GameData GameData;
+        
+        
 
         protected virtual void Awake()
         {
@@ -19,8 +23,8 @@ namespace _GameFolder.Scripts.Game.CharacterSystem
 
         protected void SetCharacterStats(int health, float speed)
         {
-            Health = health;
-            Speed = speed;
+            _health = health;
+            _speed = speed;
         }
 
         public virtual void Move(float direction)
@@ -30,14 +34,14 @@ namespace _GameFolder.Scripts.Game.CharacterSystem
 
         public virtual void TakeDamage(int damage)
         {
-            Health -= damage;
-            if (Health <= 0)
+            _health -= damage;
+            if (_health <= 0)
             {
                 Die();
             }
         }
 
-        protected virtual void Die()
+        public virtual void Die()
         {
         }
     } // END CLASS

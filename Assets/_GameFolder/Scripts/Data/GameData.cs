@@ -1,7 +1,5 @@
+using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Rendering;
-using UnityEngine.SceneManagement;
-using UnityEngine.Serialization;
 
 namespace _GameFolder.Scripts.Data
 {
@@ -13,13 +11,23 @@ namespace _GameFolder.Scripts.Data
         [SerializeField] private float playerMovementSpeed;
 
         [Header("Enemy Stats")]
+        [Header("Simple Enemy Stats")]
         [SerializeField] private int simpleEnemyMaxHealth;
         [SerializeField] private float simpleEnemyMovementSpeed;
+        [SerializeField] private float simpleEnemyMinMoveTime, simpleEnemyMaxMoveTime;
+        [Header("Bomber Enemy Stats")]
+        [SerializeField] private int bomberEnemyMaxHealth;
+        [SerializeField] private float bomberEnemyMovementSpeed;
+        [SerializeField] private float bomberEnemyMinMoveTime, bomberEnemyMaxMoveTime;
 
         [Header("Enemy Spawner Settings")]
         [SerializeField] private float spawnInterval;
+        [SerializeField] private int maxMultipleSpawnCount;
+        [SerializeField] private float multipleSpawnTime;
         [SerializeField] private GameObject[] enemyPrefabs;
         [SerializeField] private Transform[] enemySpawnPoints;
+        private List<Transform> _enemiesList;
+
 
         #region Player Getters
 
@@ -28,10 +36,27 @@ namespace _GameFolder.Scripts.Data
 
         #endregion
 
+        #region Enemy Getters
+
         #region Enemy Stats Getters
+
+        #region Simple Enemy Stats Getters
 
         public int SimpleEnemyMaxHealth => simpleEnemyMaxHealth;
         public float SimpleEnemyMovementSpeed => simpleEnemyMovementSpeed;
+        public float SimpleEnemyMinMoveTime => simpleEnemyMinMoveTime;
+        public float SimpleEnemyMaxMoveTime => simpleEnemyMaxMoveTime;
+
+        #endregion
+
+        #region Bomber Enemy Stats Getters
+
+        public int BomberEnemyMaxHealth => bomberEnemyMaxHealth;
+        public float BomberEnemyMovementSpeed => bomberEnemyMovementSpeed;
+        public float BomberEnemyMinMoveTime => bomberEnemyMinMoveTime;
+        public float BomberEnemyMaxMoveTime => bomberEnemyMaxMoveTime;
+
+        #endregion
 
         #endregion
 
@@ -40,6 +65,11 @@ namespace _GameFolder.Scripts.Data
         public float SpawnInterval => spawnInterval;
         public GameObject[] EnemyPrefabs => enemyPrefabs;
         public Transform[] EnemySpawnPoints => enemySpawnPoints;
+        public int MaxMultipleSpawnCount => maxMultipleSpawnCount;
+        public float MultipleSpawnTime => multipleSpawnTime;
+        public List<Transform> EnemiesList => _enemiesList;
+
+        #endregion
 
         #endregion
     } // END CLASS

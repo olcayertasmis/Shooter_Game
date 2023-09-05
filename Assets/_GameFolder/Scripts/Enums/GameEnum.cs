@@ -16,5 +16,13 @@ namespace _GameFolder.Scripts.Enums
             SimpleEnemy,
             BomberEnemy
         }
+
+        public enum EnemyState
+        {
+            Spawn,
+            Move,
+            Fire,
+            Dead
+        }
     } // END CLASS
 }

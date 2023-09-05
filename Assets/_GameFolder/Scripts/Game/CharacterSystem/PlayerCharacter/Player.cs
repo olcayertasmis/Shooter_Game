@@ -8,11 +8,6 @@ namespace _GameFolder.Scripts.Game.CharacterSystem.PlayerCharacter
     {
         [SerializeField] private Logger playerLogger;
 
-        protected override void Awake()
-        {
-            base.Awake();
-        }
-
         private void Start()
         {
             SetCharacterStats(GameData.PlayerMaxHealth, GameData.PlayerMovementSpeed);
@@ -24,10 +19,6 @@ namespace _GameFolder.Scripts.Game.CharacterSystem.PlayerCharacter
             base.Move(direction);
         }*/
 
-        public override void TakeDamage(int damage)
-        {
-            base.TakeDamage(damage);
-        }
 
         private void OnTriggerEnter(Collider other)
         {
@@ -37,12 +28,7 @@ namespace _GameFolder.Scripts.Game.CharacterSystem.PlayerCharacter
 
         private void Attack(Collider other)
         {
-            other.gameObject.GetComponent<Enemy>().TakeDamage(20);
-        }
-
-        protected override void Die()
-        {
-            base.Die();
+            other.gameObject.GetComponent<Enemy>().TakeDamage(1);
         }
 
         private void Log(object message)
