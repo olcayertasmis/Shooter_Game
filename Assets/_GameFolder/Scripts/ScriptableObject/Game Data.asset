@@ -14,14 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerMaxHealth: 3
   playerMovementSpeed: 3
+  rotationSpeed: 5
   simpleEnemyMaxHealth: 2
   simpleEnemyMovementSpeed: 2
-  simpleEnemyMinMoveTime: 0
-  simpleEnemyMaxMoveTime: 0
-  bomberEnemyMaxHealth: 0
-  bomberEnemyMovementSpeed: 0
-  bomberEnemyMinMoveTime: 0
-  bomberEnemyMaxMoveTime: 0
+  simpleEnemyMinMoveTime: 1
+  simpleEnemyMaxMoveTime: 3
+  bomberEnemyMaxHealth: 1
+  bomberEnemyMovementSpeed: 1
+  bomberEnemyMinMoveTime: 1
+  bomberEnemyMaxMoveTime: 3
   spawnInterval: 3
   maxMultipleSpawnCount: 3
   multipleSpawnTime: 5
@@ -31,3 +32,4 @@ MonoBehaviour:
   enemySpawnPoints:
   - {fileID: 5828198211220284890, guid: 575941ca64317df48a0180b089dc2374, type: 3}
   - {fileID: 7288081266331963730, guid: 2fe6329c2159e4d43843ded7062cbb1a, type: 3}
+  enemyParentPath: /GAME/Enemies

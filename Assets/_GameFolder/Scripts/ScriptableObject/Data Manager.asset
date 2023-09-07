@@ -14,3 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   menuData: {fileID: 11400000, guid: 62c9f99ea243b0b41b9ea6039f2fd208, type: 2}
   gameData: {fileID: 11400000, guid: 8d07fb8fbe40414408872c1a906ac27a, type: 2}
+  enemyData: {fileID: 11400000, guid: 16ea4a927593a4944ae087c6fb015252, type: 2}
+  enemyListSo: {fileID: 11400000, guid: 4c4155d9d6c292142a2473eae2867061, type: 2}
+  enemySpawnerData: {fileID: 11400000, guid: b91964b3ebd693648b7a9e16e4ca69fb, type: 2}

@@ -24,5 +24,11 @@ namespace _GameFolder.Scripts.Enums
             Fire,
             Dead
         }
+
+        public enum SpawnerType
+        {
+            Solo,
+            Multiple
+        }
     } // END CLASS
 }

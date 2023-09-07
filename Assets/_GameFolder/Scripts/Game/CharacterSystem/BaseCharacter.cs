@@ -13,8 +13,7 @@ namespace _GameFolder.Scripts.Game.CharacterSystem
 
         [Header("Data")]
         protected GameData GameData;
-        
-        
+
 
         protected virtual void Awake()
         {
