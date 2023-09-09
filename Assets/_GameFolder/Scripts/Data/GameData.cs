@@ -16,5 +16,14 @@ namespace _GameFolder.Scripts.Data
         public float PlayerMovementSpeed => playerMovementSpeed;
 
         #endregion
+
+        #region Screen Settings Getters
+
+        /*public float LeftBorder { get; set; }
+        public float RightBorder { get; set; }
+        public float UpBorder { get; set; }
+        public float DownBorder { get; set; }*/
+
+        #endregion
     } // END CLASS
 }

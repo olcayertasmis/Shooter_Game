@@ -30,5 +30,11 @@ namespace _GameFolder.Scripts.Enums
             Solo,
             Multiple
         }
+
+        public enum SpawnPoint
+        {
+            Left,
+            Right
+        }
     } // END CLASS
 }

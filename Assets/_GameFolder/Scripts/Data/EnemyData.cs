@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace _GameFolder.Scripts.Data
@@ -19,8 +20,6 @@ namespace _GameFolder.Scripts.Data
         [SerializeField] private float bomberEnemyMinMoveTime, bomberEnemyMaxMoveTime;
 
 
-        #region Enemy Getters
-
         #region Enemy Stats Getters
 
         public float RotationSpeed => rotationSpeed;
@@ -40,8 +39,6 @@ namespace _GameFolder.Scripts.Data
         public float BomberEnemyMovementSpeed => bomberEnemyMovementSpeed;
         public float BomberEnemyMinMoveTime => bomberEnemyMinMoveTime;
         public float BomberEnemyMaxMoveTime => bomberEnemyMaxMoveTime;
-
-        #endregion
 
         #endregion
 

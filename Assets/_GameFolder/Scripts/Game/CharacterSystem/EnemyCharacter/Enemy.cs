@@ -17,7 +17,7 @@ namespace _GameFolder.Scripts.Game.CharacterSystem.EnemyCharacter
 
         [Header("Other")]
         [SerializeField] private Logger enemyLogger;
-        protected EnemyData EnemyData;
+        private EnemyData _enemyData;
 
         [Header("Movement Settings")]
         private float _moveTime;
@@ -30,8 +30,8 @@ namespace _GameFolder.Scripts.Game.CharacterSystem.EnemyCharacter
         protected override void Awake()
         {
             base.Awake();
+            _enemyData = Managers.Instance.DataManager.EnemyData;
             SetFeatures();
-            EnemyData = Managers.Instance.DataManager.EnemyData;
         }
 
         private void Start()
@@ -39,14 +39,14 @@ namespace _GameFolder.Scripts.Game.CharacterSystem.EnemyCharacter
             enemyLogger = GameObject.Find("EnemyLogger").GetComponent<Logger>();
 
             _targetTransform = GameObject.FindWithTag("Player").transform;
-            _rotationSpeed = EnemyData.RotationSpeed;
+            _rotationSpeed = _enemyData.RotationSpeed;
 
             SetEnemyState(GameEnum.EnemyState.Move);
         }
 
         private void Update()
         {
-            //throw new NotImplementedException();
+            //Move();
         }
 
         private void SetFeatures()
@@ -54,12 +54,12 @@ namespace _GameFolder.Scripts.Game.CharacterSystem.EnemyCharacter
             switch (enemyType)
             {
                 case GameEnum.EnemyType.SimpleEnemy:
-                    if (_enemyState == GameEnum.EnemyState.Spawn) SetCharacterStats(EnemyData.SimpleEnemyMaxHealth, EnemyData.SimpleEnemyMovementSpeed);
-                    if (_spawnerType != GameEnum.SpawnerType.Multiple) SetMoveTime(EnemyData.SimpleEnemyMinMoveTime, EnemyData.SimpleEnemyMaxMoveTime);
+                    if (_enemyState == GameEnum.EnemyState.Spawn) SetCharacterStats(_enemyData.SimpleEnemyMaxHealth, _enemyData.SimpleEnemyMovementSpeed);
+                    if (_spawnerType != GameEnum.SpawnerType.Multiple) SetMoveTime(_enemyData.SimpleEnemyMinMoveTime, _enemyData.SimpleEnemyMaxMoveTime);
                     break;
                 case GameEnum.EnemyType.BomberEnemy:
-                    if (_enemyState == GameEnum.EnemyState.Spawn) SetCharacterStats(EnemyData.BomberEnemyMaxHealth, EnemyData.BomberEnemyMovementSpeed);
-                    if (_spawnerType != GameEnum.SpawnerType.Multiple) SetMoveTime(EnemyData.BomberEnemyMinMoveTime, EnemyData.BomberEnemyMaxMoveTime);
+                    if (_enemyState == GameEnum.EnemyState.Spawn) SetCharacterStats(_enemyData.BomberEnemyMaxHealth, _enemyData.BomberEnemyMovementSpeed);
+                    if (_spawnerType != GameEnum.SpawnerType.Multiple) SetMoveTime(_enemyData.BomberEnemyMinMoveTime, _enemyData.BomberEnemyMaxMoveTime);
                     break;
                 default:
                     Log("Not found enemy type");
@@ -99,6 +99,9 @@ namespace _GameFolder.Scripts.Game.CharacterSystem.EnemyCharacter
         private void Movement()
         {
             if (_spawnerType == GameEnum.SpawnerType.Multiple)
+            {
+            }
+            else
             {
             }
         }

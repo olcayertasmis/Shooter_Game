@@ -13,9 +13,11 @@ MonoBehaviour:
   m_Name: Enemy Spawner Data
   m_EditorClassIdentifier: 
   spawnInterval: 3
-  maxMultipleSpawnCount: 3
-  multipleSpawnTime: 5
+  enemyParentPath: /GAME/Enemies
   enemySpawnPoints:
   - {fileID: 7288081266331963730, guid: 2fe6329c2159e4d43843ded7062cbb1a, type: 3}
   - {fileID: 5828198211220284890, guid: 575941ca64317df48a0180b089dc2374, type: 3}
-  enemyParentPath: /GAME/Enemies
+  minSpawnPointZ: 10
+  maxSpawnPointZ: 50
+  maxMultipleSpawnCount: 3
+  multipleSpawnTime: 5
