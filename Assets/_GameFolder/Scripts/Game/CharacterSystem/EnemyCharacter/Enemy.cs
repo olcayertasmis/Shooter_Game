@@ -11,9 +11,10 @@ namespace _GameFolder.Scripts.Game.CharacterSystem.EnemyCharacter
     public class Enemy : BaseCharacter
     {
         [Header("Enums")]
-        [SerializeField] private GameEnum.EnemyType enemyType;
-        private GameEnum.EnemyState _enemyState;
-        private GameEnum.SpawnerType _spawnerType;
+        [SerializeField] private EnemyEnum.EnemyType enemyType;
+        private EnemyEnum.EnemyState _enemyState;
+        private EnemyEnum.SpawnerType _spawnerType;
+        private EnemyEnum.SpawnPoint _spawnPoint;
 
         [Header("Other")]
         [SerializeField] private Logger enemyLogger;
@@ -21,11 +22,12 @@ namespace _GameFolder.Scripts.Game.CharacterSystem.EnemyCharacter
 
         [Header("Movement Settings")]
         private float _moveTime;
-
         private float _rotationSpeed;
+        private float _movingDirection;
+        private Vector3 _movement;
 
         [Header("Components")]
-        private Transform _targetTransform;
+        private Transform _playerTransform;
 
         protected override void Awake()
         {
@@ -38,28 +40,43 @@ namespace _GameFolder.Scripts.Game.CharacterSystem.EnemyCharacter
         {
             enemyLogger = GameObject.Find("EnemyLogger").GetComponent<Logger>();
 
-            _targetTransform = GameObject.FindWithTag("Player").transform;
+            _playerTransform = GameObject.FindWithTag("Player").transform;
+            transform.LookAt(_playerTransform);
+
             _rotationSpeed = _enemyData.RotationSpeed;
 
-            SetEnemyState(GameEnum.EnemyState.Move);
+            _movingDirection = _spawnPoint == EnemyEnum.SpawnPoint.Left ? _movingDirection = 0 : _movingDirection = 1;
+
+            SetEnemyState(EnemyEnum.EnemyState.Move);
         }
 
         private void Update()
         {
-            //Move();
+            Move();
+            Fire();
         }
 
         private void SetFeatures()
         {
             switch (enemyType)
             {
-                case GameEnum.EnemyType.SimpleEnemy:
-                    if (_enemyState == GameEnum.EnemyState.Spawn) SetCharacterStats(_enemyData.SimpleEnemyMaxHealth, _enemyData.SimpleEnemyMovementSpeed);
-                    if (_spawnerType != GameEnum.SpawnerType.Multiple) SetMoveTime(_enemyData.SimpleEnemyMinMoveTime, _enemyData.SimpleEnemyMaxMoveTime);
+                case EnemyEnum.EnemyType.SimpleEnemy:
+                    if (_enemyState == EnemyEnum.EnemyState.Spawn) SetCharacterStats(_enemyData.SimpleEnemyMaxHealth, _enemyData.SimpleEnemyMovementSpeed);
+                    if (_spawnerType != EnemyEnum.SpawnerType.Multiple)
+                    {
+                        SetMoveTime(_enemyData.SimpleEnemyMinMoveTime, _enemyData.SimpleEnemyMaxMoveTime);
+                        SetMoveDirection();
+                    }
+
                     break;
-                case GameEnum.EnemyType.BomberEnemy:
-                    if (_enemyState == GameEnum.EnemyState.Spawn) SetCharacterStats(_enemyData.BomberEnemyMaxHealth, _enemyData.BomberEnemyMovementSpeed);
-                    if (_spawnerType != GameEnum.SpawnerType.Multiple) SetMoveTime(_enemyData.BomberEnemyMinMoveTime, _enemyData.BomberEnemyMaxMoveTime);
+                case EnemyEnum.EnemyType.BomberEnemy:
+                    if (_enemyState == EnemyEnum.EnemyState.Spawn) SetCharacterStats(_enemyData.BomberEnemyMaxHealth, _enemyData.BomberEnemyMovementSpeed);
+                    if (_spawnerType != EnemyEnum.SpawnerType.Multiple)
+                    {
+                        SetMoveTime(_enemyData.BomberEnemyMinMoveTime, _enemyData.BomberEnemyMaxMoveTime);
+                        SetMoveDirection();
+                    }
+
                     break;
                 default:
                     Log("Not found enemy type");
@@ -67,60 +84,84 @@ namespace _GameFolder.Scripts.Game.CharacterSystem.EnemyCharacter
             }
         }
 
-        private void SetEnemyState(GameEnum.EnemyState enemyState)
+        #region State Setters
+
+        private void SetEnemyState(EnemyEnum.EnemyState enemyState) => _enemyState = enemyState;
+        public void SetEnemySpawnerType(EnemyEnum.SpawnerType spawnerType) => _spawnerType = spawnerType;
+        public void SetEnemySpawnPoint(EnemyEnum.SpawnPoint spawnPoint) => _spawnPoint = spawnPoint;
+
+        #endregion
+
+
+        public override void Move()
         {
-            _enemyState = enemyState;
-        }
+            if (_enemyState != EnemyEnum.EnemyState.Move) return;
 
-        public void SetEnemySpawnerType(GameEnum.SpawnerType spawnerType)
-        {
-            _spawnerType = spawnerType;
-        }
+            if (_moveTime > 0) Movement(_speed);
 
-        public override void Move(float direction)
-        {
-            if (_enemyState == GameEnum.EnemyState.Move)
-            {
-                SetDirection();
-
-                if (_moveTime > 0) Movement();
-
-                _moveTime -= Time.deltaTime;
-                if (_moveTime <= 0) SetFeatures();
-            }
-
-            base.Move(direction);
+            _moveTime -= Time.deltaTime;
+            if (!(_moveTime <= 0)) return;
+            Fire();
+            SetMoveDirection();
+            SetFeatures();
         }
 
         private void Fire()
         {
+            SetEnemyState(EnemyEnum.EnemyState.Fire);
+
+            if (_enemyState != EnemyEnum.EnemyState.Fire) return;
+
+            //
+
+            SetRandomState();
         }
 
-        private void Movement()
+        private void Movement(float speed)
         {
-            if (_spawnerType == GameEnum.SpawnerType.Multiple)
+            if (_spawnerType == EnemyEnum.SpawnerType.Multiple)
             {
             }
             else
             {
+                //_movement = new Vector3(_movingDirection, 0.0f, 0.0f) * (speed * Time.deltaTime);
+                //transform.Translate(_movement);
+
+                var tPos = transform.position;
+                var tPosX = tPos.x + _movingDirection * Time.deltaTime * speed;
+
+                transform.position = new Vector3(tPosX, tPos.y, tPos.z);
             }
         }
 
-        private void SetDirection()
+        private void SetMoveDirection()
         {
-            if (!_targetTransform) return;
+            _movingDirection = _movingDirection switch
+            {
+                0 => 1,
+                1 => 0,
+                _ => _movingDirection
+            };
+            transform.LookAt(_playerTransform);
+        }
 
-            Vector3 directionToTarget = _targetTransform.position - transform.position;
-
-            Quaternion targetRotation = Quaternion.LookRotation(directionToTarget);
-
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, _rotationSpeed * Time.deltaTime);
+        private void SetRandomState()
+        {
+            var random = Random.Range(0, 2);
+            switch (random)
+            {
+                case 1:
+                    SetEnemyState(EnemyEnum.EnemyState.Fire);
+                    break;
+                case 2:
+                    SetEnemyState(EnemyEnum.EnemyState.Move);
+                    break;
+            }
         }
 
         public override void Die()
         {
-            base.Die();
-            SetEnemyState(GameEnum.EnemyState.Dead);
+            SetEnemyState(EnemyEnum.EnemyState.Dead);
         }
 
         private void Log(object message)

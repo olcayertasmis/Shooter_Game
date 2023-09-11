@@ -14,6 +14,7 @@ namespace _GameFolder.Scripts.Game.CharacterSystem.EnemyCharacter
         private Transform _parentTransform;
         private float _currentTime;
         private bool _canSpawn = true;
+        //private bool _onRight = false;
 
         [Header("Spawner Settings W-Game Data")]
         private GameObject[] _enemyPrefabs;
@@ -66,11 +67,11 @@ namespace _GameFolder.Scripts.Game.CharacterSystem.EnemyCharacter
 
             if (_multipleSpawnTime <= 0)
             {
-                var spawnerType = (GameEnum.SpawnerType)Random.Range(0, Enum.GetValues(typeof(GameEnum.SpawnerType)).Length);
+                var spawnerType = (EnemyEnum.SpawnerType)Random.Range(0, Enum.GetValues(typeof(EnemyEnum.SpawnerType)).Length);
 
                 switch (spawnerType)
                 {
-                    case GameEnum.SpawnerType.Multiple:
+                    case EnemyEnum.SpawnerType.Multiple:
                     {
                         var multipleSpawnCount = Random.Range(2, _enemySpawnerData.MaxMultipleSpawnCount);
 
@@ -90,7 +91,7 @@ namespace _GameFolder.Scripts.Game.CharacterSystem.EnemyCharacter
                             _enemySpawnerData.SpawnedEnemyList.Add(duplicatedEnemy);
                             duplicatedEnemy.SetParent(_parentTransform);
                             Enemy enemyScript = duplicatedEnemy.GetComponent<Enemy>();
-                            enemyScript.SetEnemySpawnerType(GameEnum.SpawnerType.Multiple);
+                            enemyScript.SetEnemySpawnerType(EnemyEnum.SpawnerType.Multiple);
                             enemyScript.SetMoveTime(lastSpawnedEnemy.GetComponent<Enemy>().GetMoveTime);
                         }
 
@@ -98,7 +99,7 @@ namespace _GameFolder.Scripts.Game.CharacterSystem.EnemyCharacter
                         _multipleSpawnTime = _enemySpawnerData.MultipleSpawnTime;
                         break;
                     }
-                    case GameEnum.SpawnerType.Solo:
+                    case EnemyEnum.SpawnerType.Solo:
                         SpawnEnemy();
                         break;
                 }
@@ -115,25 +116,16 @@ namespace _GameFolder.Scripts.Game.CharacterSystem.EnemyCharacter
 
             GameObject selectedEnemyPrefab = _enemyPrefabs[Random.Range(0, _enemyPrefabs.Length)];
 
-
-            //Transform selectedSpawnPoint = _spawnPoints[Random.Range(0, _spawnPoints.Length)];
-            //Vector3 spawnPosition = selectedSpawnPoint.position;
-
             Vector3 spawnPosition = cam.ViewportToWorldPoint(new Vector3(Random.Range(0, 2), 0f, Random.Range(_enemySpawnerData.MinSpawnPointZ, _enemySpawnerData.MaxSpawnPointZ)));
-
             spawnPosition.y = 0;
 
             spawnPosition.x = spawnPosition.x > 0 ? spawnPosition.x += 2f : spawnPosition.x -= 2f;
 
-            /*switch (spawnPoint)
-            {
-                case GameEnum.SpawnPoint.Left:
-                    break;
-                case GameEnum.SpawnPoint.Right:
-                    break;
-            }*/
-
             GameObject enemy = Instantiate(selectedEnemyPrefab, spawnPosition, Quaternion.identity);
+            Enemy enemyScript = enemy.GetComponent<Enemy>();
+
+            enemyScript.SetEnemySpawnPoint(spawnPosition.x > 0 ? EnemyEnum.SpawnPoint.Right : EnemyEnum.SpawnPoint.Left);
+
 
             _enemySpawnerData.SpawnedEnemyList.Add(enemy.transform);
             enemy.transform.SetParent(_parentTransform);

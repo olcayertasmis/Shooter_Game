@@ -10,7 +10,7 @@ namespace _GameFolder.Scripts.Game.CharacterSystem.PlayerCharacter
 
         private void Start()
         {
-            SetCharacterStats(GameData.PlayerMaxHealth, GameData.PlayerMovementSpeed);
+            SetCharacterStats(gameData.PlayerMaxHealth, gameData.PlayerMovementSpeed);
             //Move(1f);
         }
 
@@ -34,6 +34,16 @@ namespace _GameFolder.Scripts.Game.CharacterSystem.PlayerCharacter
         private void Log(object message)
         {
             if (playerLogger) playerLogger.Log(message, this);
+        }
+
+        public override void Move()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override void Die()
+        {
+            throw new System.NotImplementedException();
         }
     } // END CLASS
 }

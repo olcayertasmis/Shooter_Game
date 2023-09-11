@@ -5,19 +5,19 @@ using UnityEngine;
 
 namespace _GameFolder.Scripts.Game.CharacterSystem
 {
-    public class BaseCharacter : MonoBehaviour, IMovable, IDamageable
+    public abstract class BaseCharacter : MonoBehaviour, IMovable, IDamageable
     {
         [Header("Stats")]
         private int _health;
-        private float _speed;
+        protected float _speed;
 
         [Header("Data")]
-        protected GameData GameData;
+        protected GameData gameData;
 
 
         protected virtual void Awake()
         {
-            GameData = Managers.Instance.DataManager.GameData;
+            gameData = Managers.Instance.DataManager.GameData;
         }
 
         protected void SetCharacterStats(int health, float speed)
@@ -26,10 +26,7 @@ namespace _GameFolder.Scripts.Game.CharacterSystem
             _speed = speed;
         }
 
-        public virtual void Move(float direction)
-        {
-            //throw new System.NotImplementedException();
-        }
+        public abstract void Move();
 
         public virtual void TakeDamage(int damage)
         {
@@ -40,8 +37,6 @@ namespace _GameFolder.Scripts.Game.CharacterSystem
             }
         }
 
-        public virtual void Die()
-        {
-        }
+        public abstract void Die();
     } // END CLASS
 }
