@@ -8,12 +8,14 @@ namespace _GameFolder.Scripts.Data
         [Header("Player Stats")]
         [SerializeField] private int playerMaxHealth;
         [SerializeField] private float playerMovementSpeed;
+        [SerializeField] private float playerAttackDelay;
 
 
         #region Player Getters
 
         public int PlayerMaxHealth => playerMaxHealth;
         public float PlayerMovementSpeed => playerMovementSpeed;
+        public float PlayerAttackDelay => playerAttackDelay;
 
         #endregion
 

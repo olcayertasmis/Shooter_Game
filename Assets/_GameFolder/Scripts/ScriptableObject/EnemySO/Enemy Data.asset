@@ -17,7 +17,9 @@ MonoBehaviour:
   simpleEnemyMovementSpeed: 3
   simpleEnemyMinMoveTime: 1
   simpleEnemyMaxMoveTime: 3
+  simpleEnemyAttackDelay: 1.5
   bomberEnemyMaxHealth: 1
   bomberEnemyMovementSpeed: 2
   bomberEnemyMinMoveTime: 2
   bomberEnemyMaxMoveTime: 4
+  bomberEnemyAttackDelay: 2.5

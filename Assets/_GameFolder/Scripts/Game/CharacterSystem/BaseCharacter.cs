@@ -9,7 +9,8 @@ namespace _GameFolder.Scripts.Game.CharacterSystem
     {
         [Header("Stats")]
         private int _health;
-        protected float _speed;
+        protected float speed;
+        protected float attackDelay;
 
         [Header("Data")]
         protected GameData gameData;
@@ -20,10 +21,11 @@ namespace _GameFolder.Scripts.Game.CharacterSystem
             gameData = Managers.Instance.DataManager.GameData;
         }
 
-        protected void SetCharacterStats(int health, float speed)
+        protected void SetCharacterStats(int health, float speedValue, float attackDelayValue)
         {
             _health = health;
-            _speed = speed;
+            speed = speedValue;
+            attackDelay = attackDelayValue;
         }
 
         public abstract void Move();

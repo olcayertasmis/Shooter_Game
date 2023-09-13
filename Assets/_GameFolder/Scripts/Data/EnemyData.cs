@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace _GameFolder.Scripts.Data
 {
@@ -13,11 +14,13 @@ namespace _GameFolder.Scripts.Data
         [SerializeField] private int simpleEnemyMaxHealth;
         [SerializeField] private float simpleEnemyMovementSpeed;
         [SerializeField] private float simpleEnemyMinMoveTime, simpleEnemyMaxMoveTime;
+        [SerializeField] private float simpleEnemyAttackDelay;
 
         [Header("Bomber Enemy Stats")]
         [SerializeField] private int bomberEnemyMaxHealth;
         [SerializeField] private float bomberEnemyMovementSpeed;
         [SerializeField] private float bomberEnemyMinMoveTime, bomberEnemyMaxMoveTime;
+        [SerializeField] private float bomberEnemyAttackDelay;
 
 
         #region Enemy Stats Getters
@@ -30,6 +33,7 @@ namespace _GameFolder.Scripts.Data
         public float SimpleEnemyMovementSpeed => simpleEnemyMovementSpeed;
         public float SimpleEnemyMinMoveTime => simpleEnemyMinMoveTime;
         public float SimpleEnemyMaxMoveTime => simpleEnemyMaxMoveTime;
+        public float SimpleEnemyAttackDelay => simpleEnemyAttackDelay;
 
         #endregion
 
@@ -39,6 +43,7 @@ namespace _GameFolder.Scripts.Data
         public float BomberEnemyMovementSpeed => bomberEnemyMovementSpeed;
         public float BomberEnemyMinMoveTime => bomberEnemyMinMoveTime;
         public float BomberEnemyMaxMoveTime => bomberEnemyMaxMoveTime;
+        public float BomberEnemyAttackDelay => bomberEnemyAttackDelay;
 
         #endregion
 

@@ -10,7 +10,6 @@ namespace _GameFolder.Scripts.Data
         [Header("Enemy Spawner Settings")]
         [SerializeField] private float spawnInterval;
         [SerializeField] private string enemyParentPath;
-        [SerializeField] private Transform[] enemySpawnPoints;
         [SerializeField] private int minSpawnPointZ, maxSpawnPointZ;
 
         [Header("Multiple Spawner Settings")]
@@ -21,8 +20,6 @@ namespace _GameFolder.Scripts.Data
         #region Enemy Spawner Getters
 
         public float SpawnInterval => spawnInterval;
-        public Transform[] EnemySpawnPoints => enemySpawnPoints;
-
         public List<Transform> SpawnedEnemyList { get; set; }
         public string EnemyParentPath => enemyParentPath;
         public int MinSpawnPointZ => minSpawnPointZ;
