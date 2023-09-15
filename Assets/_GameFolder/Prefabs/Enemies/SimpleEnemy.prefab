@@ -114,7 +114,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6892201628721272325}
-  - component: {fileID: 2155316814952639007}
+  - component: {fileID: -5627086227869362850}
   m_Layer: 0
   m_Name: SimpleEnemy
   m_TagString: Enemy
@@ -138,7 +138,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2155316814952639007
+--- !u!114 &-5627086227869362850
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -147,8 +147,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 7636773063211926901}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: af537958ea0073245b35ca7f3deaada7, type: 3}
+  m_Script: {fileID: 11500000, guid: c9dd4b596242f864fa04517fefb9e5e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyType: 0
   enemyLogger: {fileID: 0}
+  bulletSpawnTransform: {fileID: 6892201628721272325}
+  isLeaderEnemy: 0

@@ -11,14 +11,14 @@ namespace _GameFolder.Scripts.Game.CharacterSystem.EnemyCharacter
     public class Enemy : BaseCharacter
     {
         [Header("Enums")]
-        [SerializeField] private EnemyEnum.EnemyType enemyType;
+        protected EnemyEnum.EnemyType enemyType;
         private EnemyEnum.EnemyState _enemyState;
         private EnemyEnum.SpawnerType _spawnerType;
         private EnemyEnum.SpawnPoint _spawnPoint;
 
         [Header("Other")]
         [SerializeField] private Logger enemyLogger;
-        private EnemyData _enemyData;
+        protected EnemyData enemyData;
 
         [Header("Movement Settings")]
         private float _moveTime;
@@ -27,9 +27,11 @@ namespace _GameFolder.Scripts.Game.CharacterSystem.EnemyCharacter
 
         [Header("Attack Settings")]
         private bool _canAttack = true;
+        [SerializeField] protected Transform bulletSpawnTransform;
+        protected bool canAttackProcess;
 
         [Header("Components")]
-        private Transform _playerTransform;
+        protected Transform playerTransform;
         private FollowerEnemy _followerEnemy;
         private LeaderEnemy _leaderEnemyScript;
 
@@ -41,12 +43,12 @@ namespace _GameFolder.Scripts.Game.CharacterSystem.EnemyCharacter
         protected override void Awake()
         {
             base.Awake();
-            _enemyData = Managers.Instance.DataManager.EnemyData;
+            enemyData = Managers.Instance.DataManager.EnemyData;
 
             _spawnPoint = transform.position.x > 0 ? EnemyEnum.SpawnPoint.Right : EnemyEnum.SpawnPoint.Left;
         }
 
-        private void Start()
+        protected virtual void Start()
         {
             if (isLeaderEnemy) SetLeaderEnemyScript();
 
@@ -56,15 +58,15 @@ namespace _GameFolder.Scripts.Game.CharacterSystem.EnemyCharacter
 
             enemyLogger = GameObject.Find("EnemyLogger").GetComponent<Logger>();
 
-            _playerTransform = GameObject.FindWithTag("Player").transform;
-            transform.LookAt(_playerTransform);
+            playerTransform = GameObject.FindWithTag("Player").transform;
+            transform.LookAt(playerTransform);
 
             _movingDirection = _spawnPoint == EnemyEnum.SpawnPoint.Left ? _movingDirection = -1 : _movingDirection = 1;
 
             SetEnemyState(EnemyEnum.EnemyState.Move);
         }
 
-        private void Update()
+        protected virtual void Update()
         {
             switch (_enemyState)
             {
@@ -87,11 +89,11 @@ namespace _GameFolder.Scripts.Game.CharacterSystem.EnemyCharacter
             switch (enemyType)
             {
                 case EnemyEnum.EnemyType.SimpleEnemy:
-                    if (_enemyState == EnemyEnum.EnemyState.Spawn) SetCharacterStats(_enemyData.SimpleEnemyMaxHealth, _enemyData.SimpleEnemyMovementSpeed, _enemyData.SimpleEnemyAttackDelay);
+                    if (_enemyState == EnemyEnum.EnemyState.Spawn) SetCharacterStats(enemyData.SimpleEnemyMaxHealth, enemyData.SimpleEnemyMovementSpeed, enemyData.SimpleEnemyAttackDelay);
                     switch (_spawnerType)
                     {
                         case EnemyEnum.SpawnerType.Solo:
-                            SetSoloEnemyStats(_enemyData.SimpleEnemyMinMoveTime, _enemyData.SimpleEnemyMaxMoveTime);
+                            SetSoloEnemyStats(enemyData.SimpleEnemyMinMoveTime, enemyData.SimpleEnemyMaxMoveTime);
                             break;
                         case EnemyEnum.SpawnerType.Multiple:
                             SetMultipleEnemyStats();
@@ -101,11 +103,11 @@ namespace _GameFolder.Scripts.Game.CharacterSystem.EnemyCharacter
                     break;
 
                 case EnemyEnum.EnemyType.BomberEnemy:
-                    if (_enemyState == EnemyEnum.EnemyState.Spawn) SetCharacterStats(_enemyData.BomberEnemyMaxHealth, _enemyData.BomberEnemyMovementSpeed, _enemyData.BomberEnemyAttackDelay);
+                    if (_enemyState == EnemyEnum.EnemyState.Spawn) SetCharacterStats(enemyData.BomberEnemyMaxHealth, enemyData.BomberEnemyMovementSpeed, enemyData.BomberEnemyAttackDelay);
                     switch (_spawnerType)
                     {
                         case EnemyEnum.SpawnerType.Solo:
-                            SetSoloEnemyStats(_enemyData.BomberEnemyMinMoveTime, _enemyData.BomberEnemyMaxMoveTime);
+                            SetSoloEnemyStats(enemyData.BomberEnemyMinMoveTime, enemyData.BomberEnemyMaxMoveTime);
                             break;
                         case EnemyEnum.SpawnerType.Multiple:
                             SetMultipleEnemyStats();
@@ -181,7 +183,7 @@ namespace _GameFolder.Scripts.Game.CharacterSystem.EnemyCharacter
                 -1 => 1,
                 _ => _movingDirection
             };
-            transform.LookAt(_playerTransform);
+            transform.LookAt(playerTransform);
         }
 
         private void SetSoloEnemyMoveTime(float minTime, float maxTime)
@@ -199,7 +201,9 @@ namespace _GameFolder.Scripts.Game.CharacterSystem.EnemyCharacter
             _canAttack = false;
             if (_enemyState == EnemyEnum.EnemyState.Attack)
             {
-                //
+                canAttackProcess = true;
+                AttackProcess();
+                canAttackProcess = false;
                 yield return new WaitForSeconds(time);
 
                 switch (_spawnerType)
@@ -215,6 +219,10 @@ namespace _GameFolder.Scripts.Game.CharacterSystem.EnemyCharacter
             }
 
             _canAttack = true;
+        }
+
+        protected virtual void AttackProcess()
+        {
         }
 
         private void SetSoloEnemyRandomState()

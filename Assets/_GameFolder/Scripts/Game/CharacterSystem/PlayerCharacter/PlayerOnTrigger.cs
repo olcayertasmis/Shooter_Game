@@ -1,5 +1,6 @@
 using _GameFolder.Scripts.Game.CharacterSystem.EnemyCharacter;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace _GameFolder.Scripts.Game.CharacterSystem.PlayerCharacter
 {
@@ -7,11 +8,12 @@ namespace _GameFolder.Scripts.Game.CharacterSystem.PlayerCharacter
     {
         private void OnTriggerEnter(Collider other)
         {
-            if (other.gameObject.transform.parent.CompareTag("Enemy")) Attack(other);
+            if (other.transform.parent != null && other.transform.parent.CompareTag("Enemy")) ToDamage(other);
+
             Debug.Log(other.gameObject.name);
         }
 
-        private void Attack(Collider other)
+        private static void ToDamage(Component other)
         {
             other.gameObject.GetComponentInParent<Enemy>().TakeDamage(1);
         }
