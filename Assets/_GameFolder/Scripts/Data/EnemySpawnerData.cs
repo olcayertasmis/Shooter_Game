@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -20,7 +19,7 @@ namespace _GameFolder.Scripts.Data
         #region Enemy Spawner Getters
 
         public float SpawnInterval => spawnInterval;
-        public List<Transform> SpawnedEnemyList { get; set; }
+        public List<Transform> spawnedEnemyList;
         public string EnemyParentPath => enemyParentPath;
         public int MinSpawnPointZ => minSpawnPointZ;
         public int MaxSpawnPointZ => maxSpawnPointZ;

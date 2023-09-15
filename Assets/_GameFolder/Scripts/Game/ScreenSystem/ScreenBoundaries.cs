@@ -1,7 +1,5 @@
-using System;
 using _GameFolder.Scripts.Manager;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 namespace _GameFolder.Scripts.Game.ScreenSystem
 {

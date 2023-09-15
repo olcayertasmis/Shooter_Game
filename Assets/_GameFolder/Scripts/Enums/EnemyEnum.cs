@@ -14,7 +14,7 @@ namespace _GameFolder.Scripts.Enums
         {
             Spawn,
             Move,
-            Fire,
+            Attack,
             Dead
         }
 

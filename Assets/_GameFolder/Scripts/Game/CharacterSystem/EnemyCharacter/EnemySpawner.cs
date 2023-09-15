@@ -29,13 +29,15 @@ namespace _GameFolder.Scripts.Game.CharacterSystem.EnemyCharacter
         [Header("Components")]
         private Camera cam;
 
+        #region Unity Functions
+
         private void Awake()
         {
             var dataManager = Managers.Instance.DataManager;
             _enemySpawnerData = dataManager.EnemySpawnerData;
             _enemyListSo = dataManager.EnemyListSo;
 
-            _enemySpawnerData.SpawnedEnemyList.Clear();
+            _enemySpawnerData.spawnedEnemyList.Clear();
 
             cam = Camera.main;
         }
@@ -58,6 +60,9 @@ namespace _GameFolder.Scripts.Game.CharacterSystem.EnemyCharacter
             Spawner();
         }
 
+        #endregion
+
+
         private void Spawner()
         {
             if (_enemyPrefabs.Length == 0) return;
@@ -76,11 +81,11 @@ namespace _GameFolder.Scripts.Game.CharacterSystem.EnemyCharacter
                     SpawnEnemy();
                     _canSpawn = false;
 
-                    _leaderEnemyGo.transform.AddComponent<LeaderEnemy>();
-
+                    var leaderEnemyScript = _leaderEnemyGo.transform.AddComponent<LeaderEnemy>();
+                    //_leaderEnemyGo.transform.GetComponent<LeaderEnemy>();
                     for (int i = 0; i < multipleSpawnCount; i++)
                     {
-                        var lastSpawnedEnemy = _enemySpawnerData.SpawnedEnemyList[^1];
+                        var lastSpawnedEnemy = _enemySpawnerData.spawnedEnemyList[^1];
                         var lastEnemySpawnedPosition = lastSpawnedEnemy.position;
                         var spawnPosition = lastEnemySpawnedPosition.x > 0
                             ? new Vector3(lastEnemySpawnedPosition.x + 4, lastEnemySpawnedPosition.y, lastEnemySpawnedPosition.z)
@@ -95,7 +100,9 @@ namespace _GameFolder.Scripts.Game.CharacterSystem.EnemyCharacter
                         var enemyScript = duplicatedEnemy.transform.GetComponent<Enemy>();
                         enemyScript.SetEnemySpawnerType(EnemyEnum.SpawnerType.Multiple);
 
-                        _enemySpawnerData.SpawnedEnemyList.Add(duplicatedEnemy.transform);
+                        _enemySpawnerData.spawnedEnemyList.Add(duplicatedEnemy.transform);
+
+                        leaderEnemyScript.followerEnemies.Add(enemyScript);
                     }
 
                     _isLeaderEnemy = false;
@@ -128,9 +135,10 @@ namespace _GameFolder.Scripts.Game.CharacterSystem.EnemyCharacter
             {
                 _leaderEnemyPrefab = selectedEnemyPrefab;
                 _leaderEnemyGo = enemy;
+                enemy.transform.GetComponent<Enemy>().isLeaderEnemy = true;
             }
 
-            _enemySpawnerData.SpawnedEnemyList.Add(enemy.transform);
+            _enemySpawnerData.spawnedEnemyList.Add(enemy.transform);
             enemy.transform.SetParent(_parentTransform);
         }
     } // END CLASS

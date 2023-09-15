@@ -1,4 +1,3 @@
-using _GameFolder.Scripts.Game.CharacterSystem.EnemyCharacter;
 using UnityEngine;
 using Logger = _GameFolder.Scripts.Services.Logger;
 
@@ -11,39 +10,24 @@ namespace _GameFolder.Scripts.Game.CharacterSystem.PlayerCharacter
         private void Start()
         {
             SetCharacterStats(gameData.PlayerMaxHealth, gameData.PlayerMovementSpeed, gameData.PlayerAttackDelay);
-            //Move(1f);
         }
 
-        /*public override void Move(float direction)
-        {
-            base.Move(direction);
-        }*/
 
-
-        private void OnTriggerEnter(Collider other)
+        public override void Move()
         {
-            if (other.gameObject.CompareTag("Enemy")) Attack(other);
-            Log(other.gameObject.name);
         }
 
-        private void Attack(Collider other)
+        public override void Die()
         {
-            other.gameObject.GetComponent<Enemy>().TakeDamage(1);
         }
+
+        #region Plugin
 
         private void Log(object message)
         {
             if (playerLogger) playerLogger.Log(message, this);
         }
 
-        public override void Move()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public override void Die()
-        {
-            throw new System.NotImplementedException();
-        }
+        #endregion
     } // END CLASS
 }

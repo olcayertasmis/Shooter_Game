@@ -31,8 +31,12 @@ namespace _GameFolder.Scripts.Game.CharacterSystem.EnemyCharacter
         [Header("Components")]
         private Transform _playerTransform;
         private FollowerEnemy _followerEnemy;
+        private LeaderEnemy _leaderEnemyScript;
 
-        //[Header("Controls")]
+        [Header("Controls")]
+        public bool isLeaderEnemy;
+
+        #region Unity Functions
 
         protected override void Awake()
         {
@@ -44,6 +48,8 @@ namespace _GameFolder.Scripts.Game.CharacterSystem.EnemyCharacter
 
         private void Start()
         {
+            if (isLeaderEnemy) SetLeaderEnemyScript();
+
             if (_spawnerType == EnemyEnum.SpawnerType.Multiple) _followerEnemy = transform.GetComponent<FollowerEnemy>();
 
             SetFeatures();
@@ -65,11 +71,16 @@ namespace _GameFolder.Scripts.Game.CharacterSystem.EnemyCharacter
                 case EnemyEnum.EnemyState.Move:
                     Move();
                     break;
-                case EnemyEnum.EnemyState.Fire:
+                case EnemyEnum.EnemyState.Attack:
                     if (_canAttack) StartCoroutine(Attack(attackDelay));
                     break;
             }
         }
+
+        #endregion
+
+
+        #region Set Features
 
         private void SetFeatures()
         {
@@ -83,7 +94,7 @@ namespace _GameFolder.Scripts.Game.CharacterSystem.EnemyCharacter
                             SetSoloEnemyStats(_enemyData.SimpleEnemyMinMoveTime, _enemyData.SimpleEnemyMaxMoveTime);
                             break;
                         case EnemyEnum.SpawnerType.Multiple:
-                            StartCoroutine(SetMultipleEnemyStats());
+                            SetMultipleEnemyStats();
                             break;
                     }
 
@@ -97,7 +108,7 @@ namespace _GameFolder.Scripts.Game.CharacterSystem.EnemyCharacter
                             SetSoloEnemyStats(_enemyData.BomberEnemyMinMoveTime, _enemyData.BomberEnemyMaxMoveTime);
                             break;
                         case EnemyEnum.SpawnerType.Multiple:
-                            StartCoroutine(SetMultipleEnemyStats());
+                            SetMultipleEnemyStats();
                             break;
                     }
 
@@ -108,6 +119,26 @@ namespace _GameFolder.Scripts.Game.CharacterSystem.EnemyCharacter
             }
         }
 
+        private void SetMultipleEnemyStats()
+        {
+            _moveTime = _followerEnemy.LeadEnemyScript._moveTime;
+            SetMoveDirection();
+        }
+
+        private void SetSoloEnemyStats(float minTime, float maxTime)
+        {
+            SetSoloEnemyMoveTime(minTime, maxTime);
+            SetMoveDirection();
+        }
+
+        public void SetLeaderEnemyScript()
+        {
+            _leaderEnemyScript = transform.GetComponent<LeaderEnemy>();
+        }
+
+        #endregion
+
+
         #region State Setters
 
         private void SetEnemyState(EnemyEnum.EnemyState enemyState) => _enemyState = enemyState;
@@ -115,6 +146,7 @@ namespace _GameFolder.Scripts.Game.CharacterSystem.EnemyCharacter
 
         #endregion
 
+        #region Movement
 
         public override void Move()
         {
@@ -128,22 +160,10 @@ namespace _GameFolder.Scripts.Game.CharacterSystem.EnemyCharacter
 
             if (_moveTime <= 0)
             {
-                SetEnemyState(EnemyEnum.EnemyState.Fire);
+                SetEnemyState(EnemyEnum.EnemyState.Attack);
             }
         }
 
-        private IEnumerator Attack(float time)
-        {
-            _canAttack = false;
-            if (_enemyState == EnemyEnum.EnemyState.Fire)
-            {
-                //
-                yield return new WaitForSeconds(time);
-                SetRandomState();
-            }
-
-            _canAttack = true;
-        }
 
         private void Movement(float speedParam)
         {
@@ -164,13 +184,46 @@ namespace _GameFolder.Scripts.Game.CharacterSystem.EnemyCharacter
             transform.LookAt(_playerTransform);
         }
 
-        private void SetRandomState()
+        private void SetSoloEnemyMoveTime(float minTime, float maxTime)
+        {
+            _moveTime = Random.Range(minTime, maxTime);
+        }
+
+        #endregion
+
+
+        #region Attack
+
+        private IEnumerator Attack(float time)
+        {
+            _canAttack = false;
+            if (_enemyState == EnemyEnum.EnemyState.Attack)
+            {
+                //
+                yield return new WaitForSeconds(time);
+
+                switch (_spawnerType)
+                {
+                    case EnemyEnum.SpawnerType.Solo:
+                        SetSoloEnemyRandomState();
+                        break;
+                    case EnemyEnum.SpawnerType.Multiple:
+                        if (_followerEnemy.LeadEnemyScript._enemyState == EnemyEnum.EnemyState.Move) SetFeatures();
+                        SetEnemyState(_followerEnemy.LeadEnemyScript._enemyState);
+                        break;
+                }
+            }
+
+            _canAttack = true;
+        }
+
+        private void SetSoloEnemyRandomState()
         {
             var random = Random.Range(0, 2);
             switch (random)
             {
                 case 0:
-                    SetEnemyState(EnemyEnum.EnemyState.Fire);
+                    SetEnemyState(EnemyEnum.EnemyState.Attack);
                     break;
                 case 1:
                     SetFeatures();
@@ -179,32 +232,21 @@ namespace _GameFolder.Scripts.Game.CharacterSystem.EnemyCharacter
             }
         }
 
+        #endregion
+
+
         public override void Die()
         {
+            if (isLeaderEnemy) _leaderEnemyScript.SetNewLeaderEnemy();
+
             SetEnemyState(EnemyEnum.EnemyState.Dead);
+
+            gameObject.SetActive(false);
         }
 
         private void Log(object message)
         {
             if (enemyLogger) enemyLogger.Log(message, this);
-        }
-
-        private void SetMoveTime(float minTime, float maxTime)
-        {
-            _moveTime = Random.Range(minTime, maxTime);
-        }
-
-        private IEnumerator SetMultipleEnemyStats()
-        {
-            yield return new WaitForSeconds(.1f);
-            _moveTime = _followerEnemy.LeadEnemyScript._moveTime;
-            SetMoveDirection();
-        }
-
-        private void SetSoloEnemyStats(float minTime, float maxTime)
-        {
-            SetMoveTime(minTime, maxTime);
-            SetMoveDirection();
         }
     } // END CLASS
 }
