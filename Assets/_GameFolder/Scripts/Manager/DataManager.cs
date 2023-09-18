@@ -1,5 +1,6 @@
 using _GameFolder.Scripts.Data;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace _GameFolder.Scripts.Manager
 {
@@ -8,7 +9,7 @@ namespace _GameFolder.Scripts.Manager
     {
         [Header("Data")]
         [SerializeField] private MenuData menuData;
-        [SerializeField] private GameData gameData;
+        [FormerlySerializedAs("gameData")] [SerializeField] private PlayerData playerData;
         [SerializeField] private EnemyData enemyData;
         [SerializeField] private EnemyListSo enemyListSo;
         [SerializeField] private EnemySpawnerData enemySpawnerData;
@@ -16,7 +17,7 @@ namespace _GameFolder.Scripts.Manager
         #region Data Getters
 
         public MenuData MenuData => menuData;
-        public GameData GameData => gameData;
+        public PlayerData PlayerData => playerData;
         public EnemyData EnemyData => enemyData;
         public EnemyListSo EnemyListSo => enemyListSo;
         public EnemySpawnerData EnemySpawnerData => enemySpawnerData;

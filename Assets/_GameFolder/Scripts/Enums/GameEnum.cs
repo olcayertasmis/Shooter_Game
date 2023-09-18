@@ -10,7 +10,5 @@ namespace _GameFolder.Scripts.Enums
             Play,
             Dead
         }
-
-
     } // END CLASS
 }

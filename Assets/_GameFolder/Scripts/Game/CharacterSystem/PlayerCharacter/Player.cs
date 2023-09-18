@@ -9,7 +9,7 @@ namespace _GameFolder.Scripts.Game.CharacterSystem.PlayerCharacter
 
         private void Start()
         {
-            SetCharacterStats(gameData.PlayerMaxHealth, gameData.PlayerMovementSpeed, gameData.PlayerAttackDelay);
+            SetCharacterStats(playerData.PlayerMaxHealth, playerData.PlayerMovementSpeed, playerData.PlayerAttackDelay);
         }
 
 

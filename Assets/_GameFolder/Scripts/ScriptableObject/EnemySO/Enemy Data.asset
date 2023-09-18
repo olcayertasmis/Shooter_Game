@@ -15,16 +15,16 @@ MonoBehaviour:
   rotationSpeed: 5
   simpleEnemyMaxHealth: 2
   simpleEnemyMovementSpeed: 3
-  simpleEnemyMinMoveTime: 1
-  simpleEnemyMaxMoveTime: 3
+  simpleEnemyMinMoveTime: 5
+  simpleEnemyMaxMoveTime: 10
   simpleEnemyAttackDelay: 1
   simpleEnemyBullet: {fileID: 4008857165917099209, guid: 6cc1480610fd73444a30c6536955ed50,
     type: 3}
   simpleEnemyDamageValue: 1
   bomberEnemyMaxHealth: 1
   bomberEnemyMovementSpeed: 2
-  bomberEnemyMinMoveTime: 2
-  bomberEnemyMaxMoveTime: 4
+  bomberEnemyMinMoveTime: 4
+  bomberEnemyMaxMoveTime: 13
   bomberEnemyAttackDelay: 1
   bomberEnemyBullet: {fileID: 4008857165917099209, guid: 2fb3188d0f1b81641898bfa418eb3659,
     type: 3}

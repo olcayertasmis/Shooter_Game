@@ -115,6 +115,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6892201628721272325}
   - component: {fileID: -5627086227869362850}
+  - component: {fileID: -3750224997190196972}
   m_Layer: 0
   m_Name: SimpleEnemy
   m_TagString: Enemy
@@ -153,3 +154,15 @@ MonoBehaviour:
   enemyLogger: {fileID: 0}
   bulletSpawnTransform: {fileID: 6892201628721272325}
   isLeaderEnemy: 0
+--- !u!114 &-3750224997190196972
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7636773063211926901}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc4727a37773b6544aecf5bbbc273cb1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

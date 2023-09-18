@@ -61,7 +61,7 @@ namespace _GameFolder.Scripts.Game.CharacterSystem.EnemyCharacter
             playerTransform = GameObject.FindWithTag("Player").transform;
             transform.LookAt(playerTransform);
 
-            _movingDirection = _spawnPoint == EnemyEnum.SpawnPoint.Left ? _movingDirection = -1 : _movingDirection = 1;
+            _movingDirection = _spawnPoint == EnemyEnum.SpawnPoint.Left ? _movingDirection = 1 : _movingDirection = -1;
 
             SetEnemyState(EnemyEnum.EnemyState.Move);
         }
@@ -84,7 +84,7 @@ namespace _GameFolder.Scripts.Game.CharacterSystem.EnemyCharacter
 
         #region Set Features
 
-        private void SetFeatures()
+        public void SetFeatures()
         {
             switch (enemyType)
             {
