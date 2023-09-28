@@ -8,7 +8,7 @@ namespace _GameFolder.Scripts.Enums
         {
             Menu,
             Play,
-            Dead
+            Fail
         }
     } // END CLASS
 }

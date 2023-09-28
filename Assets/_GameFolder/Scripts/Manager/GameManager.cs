@@ -19,7 +19,7 @@ namespace _GameFolder.Scripts.Manager
                     break;
                 case GameEnum.GameState.Play:
                     break;
-                case GameEnum.GameState.Dead:
+                case GameEnum.GameState.Fail:
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(setState), setState, null);
