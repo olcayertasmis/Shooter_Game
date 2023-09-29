@@ -12,13 +12,9 @@ namespace _GameFolder.Scripts.Game.CharacterSystem
         protected float speed;
         protected float attackDelay;
 
-        [Header("Data")]
-        protected PlayerData playerData;
-
 
         protected virtual void Awake()
         {
-            playerData = Managers.Instance.DataManager.PlayerData;
         }
 
         protected void SetCharacterStats(int health, float speedValue, float attackDelayValue)

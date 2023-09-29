@@ -28,9 +28,18 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             ""id"": ""ae435b41-906e-4797-a364-d5cdc3f74e79"",
             ""actions"": [
                 {
-                    ""name"": ""Movement"",
+                    ""name"": ""CrosshairMove"",
                     ""type"": ""PassThrough"",
                     ""id"": ""582a7eb4-7816-4cfe-ab08-16b7ce68cf8a"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""HorizontalMove"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""53a92cf9-be11-469e-9ad6-fd7f6519a17b"",
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -45,7 +54,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Movement"",
+                    ""action"": ""CrosshairMove"",
                     ""isComposite"": true,
                     ""isPartOfComposite"": false
                 },
@@ -56,7 +65,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Movement"",
+                    ""action"": ""CrosshairMove"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
@@ -67,7 +76,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Movement"",
+                    ""action"": ""CrosshairMove"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
@@ -78,7 +87,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Movement"",
+                    ""action"": ""CrosshairMove"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
@@ -89,7 +98,40 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Movement"",
+                    ""action"": ""CrosshairMove"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""2D Vector"",
+                    ""id"": ""76412da0-5102-4f05-adf0-9a497ad6eae5"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""HorizontalMove"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""f364c4a0-8d0c-439a-9415-4daf6e5c022c"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""HorizontalMove"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""8da9fa84-d9eb-439f-8fdc-38b33a0e466a"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""HorizontalMove"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 }
@@ -100,7 +142,8 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
 }");
         // PlayerActions
         m_PlayerActions = asset.FindActionMap("PlayerActions", throwIfNotFound: true);
-        m_PlayerActions_Movement = m_PlayerActions.FindAction("Movement", throwIfNotFound: true);
+        m_PlayerActions_CrosshairMove = m_PlayerActions.FindAction("CrosshairMove", throwIfNotFound: true);
+        m_PlayerActions_HorizontalMove = m_PlayerActions.FindAction("HorizontalMove", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -162,12 +205,14 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     // PlayerActions
     private readonly InputActionMap m_PlayerActions;
     private List<IPlayerActionsActions> m_PlayerActionsActionsCallbackInterfaces = new List<IPlayerActionsActions>();
-    private readonly InputAction m_PlayerActions_Movement;
+    private readonly InputAction m_PlayerActions_CrosshairMove;
+    private readonly InputAction m_PlayerActions_HorizontalMove;
     public struct PlayerActionsActions
     {
         private @PlayerInput m_Wrapper;
         public PlayerActionsActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Movement => m_Wrapper.m_PlayerActions_Movement;
+        public InputAction @CrosshairMove => m_Wrapper.m_PlayerActions_CrosshairMove;
+        public InputAction @HorizontalMove => m_Wrapper.m_PlayerActions_HorizontalMove;
         public InputActionMap Get() { return m_Wrapper.m_PlayerActions; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -177,16 +222,22 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         {
             if (instance == null || m_Wrapper.m_PlayerActionsActionsCallbackInterfaces.Contains(instance)) return;
             m_Wrapper.m_PlayerActionsActionsCallbackInterfaces.Add(instance);
-            @Movement.started += instance.OnMovement;
-            @Movement.performed += instance.OnMovement;
-            @Movement.canceled += instance.OnMovement;
+            @CrosshairMove.started += instance.OnCrosshairMove;
+            @CrosshairMove.performed += instance.OnCrosshairMove;
+            @CrosshairMove.canceled += instance.OnCrosshairMove;
+            @HorizontalMove.started += instance.OnHorizontalMove;
+            @HorizontalMove.performed += instance.OnHorizontalMove;
+            @HorizontalMove.canceled += instance.OnHorizontalMove;
         }
 
         private void UnregisterCallbacks(IPlayerActionsActions instance)
         {
-            @Movement.started -= instance.OnMovement;
-            @Movement.performed -= instance.OnMovement;
-            @Movement.canceled -= instance.OnMovement;
+            @CrosshairMove.started -= instance.OnCrosshairMove;
+            @CrosshairMove.performed -= instance.OnCrosshairMove;
+            @CrosshairMove.canceled -= instance.OnCrosshairMove;
+            @HorizontalMove.started -= instance.OnHorizontalMove;
+            @HorizontalMove.performed -= instance.OnHorizontalMove;
+            @HorizontalMove.canceled -= instance.OnHorizontalMove;
         }
 
         public void RemoveCallbacks(IPlayerActionsActions instance)
@@ -206,6 +257,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     public PlayerActionsActions @PlayerActions => new PlayerActionsActions(this);
     public interface IPlayerActionsActions
     {
-        void OnMovement(InputAction.CallbackContext context);
+        void OnCrosshairMove(InputAction.CallbackContext context);
+        void OnHorizontalMove(InputAction.CallbackContext context);
     }
 }

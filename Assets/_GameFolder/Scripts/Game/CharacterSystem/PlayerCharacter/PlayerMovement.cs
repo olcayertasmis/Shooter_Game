@@ -1,4 +1,3 @@
-using JetBrains.Annotations;
 using UnityEngine;
 
 namespace _GameFolder.Scripts.Game.CharacterSystem.PlayerCharacter
@@ -6,23 +5,26 @@ namespace _GameFolder.Scripts.Game.CharacterSystem.PlayerCharacter
     [System.Serializable]
     public class PlayerMovement
     {
-        private Rigidbody _rb;
-
         private Player _playerScript;
 
-        private Vector3 movementDirection;
+        private Rigidbody _rb;
+
+        private Vector3 movementDirection, movementAmount;
 
         public void OnStart(Player playerScript)
         {
             _playerScript = playerScript;
 
-            _rb = playerScript.GetComponent<Rigidbody>();
+            _rb = playerScript.transform.GetComponentInChildren<Rigidbody>();
         }
 
-        public void OnUpdate()
+        public void Movement()
         {
-            movementDirection = _playerScript.transform.right * _playerScript.PlayerInputs.horizontal;
-            movementDirection.Normalize();
+            movementDirection = new Vector3(_playerScript.PlayerInputs.HorizontalMovementInput, 0, 0).normalized;
+
+            movementAmount = _playerScript.PlayerData.PlayerMovementSpeed * movementDirection;
+
+            _rb.velocity = movementAmount;
         }
-    }
+    } // END CLASS
 }

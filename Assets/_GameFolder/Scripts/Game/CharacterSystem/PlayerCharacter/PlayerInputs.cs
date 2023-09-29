@@ -4,21 +4,17 @@ namespace _GameFolder.Scripts.Game.CharacterSystem.PlayerCharacter
 {
     public class PlayerInputs
     {
-        private Vector2 _vector2Input;
-
-        public float horizontal;
+        public Vector2 CrosshairInput { get; private set; }
+        public float HorizontalMovementInput { get; private set; }
 
         public PlayerInputs()
         {
             var playerInput = new PlayerInput();
 
-            playerInput.PlayerActions.Movement.performed += input => _vector2Input = input.ReadValue<Vector2>();
+            playerInput.PlayerActions.CrosshairMove.performed += ctx => CrosshairInput = ctx.ReadValue<Vector2>();
+            playerInput.PlayerActions.HorizontalMove.performed += ctx => HorizontalMovementInput = ctx.ReadValue<Vector2>().x;
+
             playerInput.Enable();
         }
-
-        public void OnUpdate()
-        {
-            horizontal = _vector2Input.x;
-        }
-    }
+    } // END CLASS
 }

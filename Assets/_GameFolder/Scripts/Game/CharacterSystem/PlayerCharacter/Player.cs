@@ -1,4 +1,5 @@
-using System;
+using _GameFolder.Scripts.Data;
+using _GameFolder.Scripts.Manager;
 using UnityEngine;
 using Logger = _GameFolder.Scripts.Services.Logger;
 
@@ -8,43 +9,49 @@ namespace _GameFolder.Scripts.Game.CharacterSystem.PlayerCharacter
     {
         [SerializeField] private Logger playerLogger;
 
-        private PlayerInputs _playerInputs;
-        private PlayerMovement _playerMovement;
-
+        [field: Header("Components")]
         private Rigidbody _rb;
 
-        #region Getters
+        [Header("Scripts")]
+        private PlayerMovement _playerMovement;
+        public PlayerInputs PlayerInputs { get; private set; }
 
-        public PlayerInputs PlayerInputs => _playerInputs;
+        [field: Header("Data")]
+        public PlayerData PlayerData { get; private set; }
 
-        #endregion
 
         protected override void Awake()
         {
             base.Awake();
 
-            _rb = GetComponent<Rigidbody>();
+            PlayerData = Managers.Instance.DataManager.PlayerData;
 
-            _playerInputs = new PlayerInputs();
+            _rb = GetComponentInChildren<Rigidbody>();
+
+            PlayerInputs = new PlayerInputs();
             _playerMovement = new PlayerMovement();
         }
 
         private void Start()
         {
-            SetCharacterStats(playerData.PlayerMaxHealth, playerData.PlayerMovementSpeed, playerData.PlayerAttackDelay);
+            SetCharacterStats(PlayerData.PlayerMaxHealth, PlayerData.PlayerMovementSpeed, PlayerData.PlayerAttackDelay);
 
             _playerMovement.OnStart(this);
         }
 
         private void Update()
         {
-            _playerInputs.OnUpdate();
-            _playerMovement.OnUpdate();
+        }
+
+        private void FixedUpdate()
+        {
+            Move();
         }
 
 
         public override void Move()
         {
+            _playerMovement.Movement();
         }
 
         public override void Die()
