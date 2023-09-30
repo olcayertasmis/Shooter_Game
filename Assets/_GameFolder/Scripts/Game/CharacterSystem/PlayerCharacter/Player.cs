@@ -15,6 +15,7 @@ namespace _GameFolder.Scripts.Game.CharacterSystem.PlayerCharacter
         [Header("Scripts")]
         private PlayerMovement _playerMovement;
         public PlayerInputs PlayerInputs { get; private set; }
+        private CrosshairController crosshairController;
 
         [field: Header("Data")]
         public PlayerData PlayerData { get; private set; }
@@ -30,6 +31,8 @@ namespace _GameFolder.Scripts.Game.CharacterSystem.PlayerCharacter
 
             PlayerInputs = new PlayerInputs();
             _playerMovement = new PlayerMovement();
+
+            crosshairController = gameObject.GetComponentInChildren<CrosshairController>();
         }
 
         private void Start()
@@ -37,6 +40,8 @@ namespace _GameFolder.Scripts.Game.CharacterSystem.PlayerCharacter
             SetCharacterStats(PlayerData.PlayerMaxHealth, PlayerData.PlayerMovementSpeed, PlayerData.PlayerAttackDelay);
 
             _playerMovement.OnStart(this);
+
+            crosshairController.onFireAction += OnFireAction;
         }
 
         private void Update()
@@ -52,6 +57,17 @@ namespace _GameFolder.Scripts.Game.CharacterSystem.PlayerCharacter
         public override void Move()
         {
             _playerMovement.Movement();
+        }
+
+        private void OnFireAction()
+        {
+            Debug.Log("3");
+            Fire();
+        }
+
+        private void Fire()
+        {
+            Debug.Log("Ateş edildi!");
         }
 
         public override void Die()
