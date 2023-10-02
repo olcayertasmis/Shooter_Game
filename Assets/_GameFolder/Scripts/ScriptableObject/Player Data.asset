@@ -15,7 +15,7 @@ MonoBehaviour:
   playerMaxHealth: 3
   playerMovementSpeed: 3
   playerAttackDelay: 2.5
-  fireRange: 0
+  fireRange: 10
   crosshairSpeed: 200
   crosshairLayerMask:
     serializedVersion: 2

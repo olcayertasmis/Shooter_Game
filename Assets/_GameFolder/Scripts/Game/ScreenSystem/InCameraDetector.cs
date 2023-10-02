@@ -6,9 +6,12 @@ namespace _GameFolder.Scripts.Game.ScreenSystem
 {
     public class InCameraDetector : MonoBehaviour
     {
+        [Header("Camera Components")]
         private Plane[] _cameraFrustum;
-        private Collider _collider;
         private Camera _cam;
+        private Collider _collider;
+
+        [Header("Enemy")]
         private Enemy _enemy;
         private bool _isItInside;
         private bool _didChange = true;
@@ -29,14 +32,7 @@ namespace _GameFolder.Scripts.Game.ScreenSystem
             var bounds = _collider.bounds;
 
             _cameraFrustum = GeometryUtility.CalculateFrustumPlanes(_cam);
-            if (GeometryUtility.TestPlanesAABB(_cameraFrustum, bounds))
-            {
-                _isItInside = true;
-            }
-            else
-            {
-                _isItInside = false;
-            }
+            _isItInside = GeometryUtility.TestPlanesAABB(_cameraFrustum, bounds);
         }
 
         private IEnumerator SetAfterStart()

@@ -1,4 +1,5 @@
 using _GameFolder.Scripts.Data;
+using _GameFolder.Scripts.Game.CharacterSystem.EnemyCharacter;
 using _GameFolder.Scripts.Manager;
 using UnityEngine;
 using Logger = _GameFolder.Scripts.Services.Logger;
@@ -59,13 +60,13 @@ namespace _GameFolder.Scripts.Game.CharacterSystem.PlayerCharacter
             _playerMovement.Movement();
         }
 
-        private void OnFireAction()
+        private void OnFireAction(Transform enemyTransform)
         {
-            Debug.Log("3");
-            Fire();
+            enemyTransform.GetComponentInParent<Enemy>().TakeDamage(1);
+            //Fire();
         }
 
-        private void Fire()
+        private void Fire(Transform enemyTransform)
         {
             Debug.Log("Ateş edildi!");
         }

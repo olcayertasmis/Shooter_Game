@@ -4,9 +4,13 @@ namespace _GameFolder.Scripts.Game.CharacterSystem.PlayerCharacter
 {
     public class PlayerInputs
     {
+        [field: Header("Crosshair Movement Input")]
         public Vector2 CrosshairInput { get; private set; }
+
+        [field: Header("Player Movement Input")]
         public float HorizontalMovementInput { get; private set; }
 
+        [Header("Bool")]
         private bool isFiring;
 
         public PlayerInputs()
